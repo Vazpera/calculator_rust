@@ -1,0 +1,8 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "name":"rust",
+  "features": {
+    "ghcr.io/devcontainers/features/rust:1": {},
+    "ghcr.io/larsnieuwenhuizen/features/neovim:0": {}
+  }
+}
