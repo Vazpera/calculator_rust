@@ -2,6 +2,14 @@ use core::f64;
 use std::{f64::consts, fmt::Display, u8};
 
 #[derive(Debug, Copy, Clone, PartialEq)]
+pub enum Constant {
+    Inf,
+    Pi,
+    Tau,
+    Phi,
+}
+
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Token {
     Number(f64),
     Add,
@@ -18,8 +26,7 @@ pub enum Token {
     LParen,
     RParen,
     Comma,
-    Inf,
-    Pi,
+    Const(Constant),
 }
 
 impl Display for Token {
@@ -44,8 +51,7 @@ impl Display for Token {
                 LParen => "(".to_owned(),
                 RParen => ")".to_owned(),
                 Comma => ",".to_owned(),
-                Inf => "inf".to_owned(),
-                Pi => "pi".to_owned(),
+                Const(j) => format!("{j:?}"),
             }
         )
     }
@@ -62,7 +68,7 @@ impl Token {
     pub fn is_function(&self) -> bool {
         use Token::*;
         match self {
-            Max | Min | Sin | Cos | Tan | Sqrt | Pi | Inf => true,
+            Max | Min | Sin | Cos | Tan | Sqrt => true,
             _ => false,
         }
     }
@@ -104,12 +110,6 @@ impl Token {
         use Token::*;
         match (self.is_function(), self.is_operator()) {
             (true, false) => match self {
-                Inf => {
-                    stack.push(f64::INFINITY)
-                }
-                Pi => {
-                    stack.push(consts::PI)
-                }
                 Min => {
                     let (b, a) = (stack.pop()?, stack.pop()?);
                     stack.push(a.min(b))
@@ -159,11 +159,16 @@ impl Token {
                 }
                 _ => panic!["Invalid operator!"],
             },
-            (false, false) => {
-                if let Number(j) = self {
-                    stack.push(j)
-                }
-            }
+            (false, false) => match self {
+                Const(j) => match j {
+                    Constant::Inf => stack.push(f64::INFINITY),
+                    Constant::Pi => stack.push(consts::PI),
+                    Constant::Tau => stack.push(consts::TAU),
+                    _ => {}
+                },
+                Number(j) => stack.push(j),
+                _ => {},
+            },
             _ => {}
         }
         Some(())

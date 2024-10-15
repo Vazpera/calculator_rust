@@ -1,5 +1,5 @@
 use crate::token::Token;
-
+use crate::token::Constant;
 pub struct Lexer {
     pub string: String,
 }
@@ -26,8 +26,8 @@ impl Lexer {
             "cos" => Token::Cos,
             "tan" => Token::Tan,
             "sqrt" => Token::Sqrt,
-            "inf" => Token::Inf,
-            "pi" => Token::Pi,
+            "inf" => Token::Const(Constant::Inf),
+            "pi" => Token::Const(Constant::Pi),
             _ => panic!["Invalid function! {func}"],
         }
     }
