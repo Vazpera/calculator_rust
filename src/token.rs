@@ -1,3 +1,4 @@
+use std::{fmt::Display, u8};
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Token {
@@ -15,6 +16,34 @@ pub enum Token {
     Sqrt,
     LParen,
     RParen,
+    Comma,
+}
+
+impl Display for Token {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use Token::*;
+        write!(
+            f,
+            "{}",
+            match self {
+                Number(j) => j.to_string(),
+                Add => "+".to_owned(),
+                Sub => "-".to_owned(),
+                Mul => "*".to_owned(),
+                Div => "/".to_owned(),
+                Pow => "^".to_owned(),
+                Max => "max".to_owned(),
+                Min => "min".to_owned(),
+                Sin => "sin".to_owned(),
+                Cos => "cos".to_owned(),
+                Tan => "tan".to_owned(),
+                Sqrt => "sqrt".to_owned(),
+                LParen => "(".to_owned(),
+                RParen => ")".to_owned(),
+                Comma => ",".to_owned(),
+            }
+        )
+    }
 }
 
 impl Token {
@@ -48,6 +77,8 @@ impl Token {
                 Pow => Some(3),
                 _ => Some(0),
             }
+        } else if self.is_function() {
+            Some(0)
         } else {
             None
         }

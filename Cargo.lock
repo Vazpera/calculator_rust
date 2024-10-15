@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "calculator_rust"
+name = "calc"
 version = "0.1.0"

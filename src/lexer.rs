@@ -38,6 +38,7 @@ impl Lexer {
             '^' => Token::Pow,
             '(' => Token::LParen,
             ')' => Token::RParen,
+            ',' => Token::Comma,
             _ => panic!["Invalid operator! {op}"],
         }
     }
@@ -52,7 +53,9 @@ impl Lexer {
 
         while !to_be_parsed.is_empty() {
             let tok = to_be_parsed.remove(0);
+            
             match tok {
+                ' ' => {},
                 '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '.' => {
                     if parsing_fnc {
                         output_queue.push(Self::parse_function(fnc_stack.clone()));
@@ -61,7 +64,7 @@ impl Lexer {
                     parsing_num = true;
                     num_stack.push(tok);
                 }
-                '+' | '-' | '/' | '*' | '^' | '(' | ')' => {
+                '+' | '-' | '/' | '*' | '^' | '(' | ')' | ',' => {
                     match (parsing_fnc, parsing_num) {
                         (false, true) => {
                             output_queue.push(Token::Number(num_stack.parse::<f64>().unwrap()))
