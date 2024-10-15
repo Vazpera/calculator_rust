@@ -163,7 +163,6 @@ impl Token {
                     Constant::Inf => stack.push(f64::INFINITY),
                     Constant::Pi => stack.push(consts::PI),
                     Constant::Tau => stack.push(consts::TAU),
-                    _ => {}
                 },
                 Number(j) => stack.push(j),
                 _ => {},
