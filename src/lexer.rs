@@ -28,6 +28,7 @@ impl Lexer {
             "sqrt" => Token::Sqrt,
             "inf" => Token::Const(Constant::Inf),
             "pi" => Token::Const(Constant::Pi),
+            "tau" => Token::Const(Constant::Tau),
             _ => panic!["Invalid function! {func}"],
         }
     }

@@ -13,6 +13,5 @@ fn main() {
             .tokenize()
             .shunt()
             .evaluate();
-        println!("{}", p.stack[0]);
     }
 }

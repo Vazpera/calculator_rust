@@ -6,7 +6,6 @@ pub enum Constant {
     Inf,
     Pi,
     Tau,
-    Phi,
 }
 
 #[derive(Debug, Copy, Clone, PartialEq)]
