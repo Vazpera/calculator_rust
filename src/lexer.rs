@@ -26,6 +26,8 @@ impl Lexer {
             "cos" => Token::Cos,
             "tan" => Token::Tan,
             "sqrt" => Token::Sqrt,
+            "inf" => Token::Inf,
+            "pi" => Token::Pi,
             _ => panic!["Invalid function! {func}"],
         }
     }

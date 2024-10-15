@@ -1,4 +1,5 @@
-use std::{fmt::Display, u8};
+use core::f64;
+use std::{f64::consts, fmt::Display, u8};
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Token {
@@ -17,6 +18,8 @@ pub enum Token {
     LParen,
     RParen,
     Comma,
+    Inf,
+    Pi,
 }
 
 impl Display for Token {
@@ -41,6 +44,8 @@ impl Display for Token {
                 LParen => "(".to_owned(),
                 RParen => ")".to_owned(),
                 Comma => ",".to_owned(),
+                Inf => "inf".to_owned(),
+                Pi => "pi".to_owned(),
             }
         )
     }
@@ -57,7 +62,7 @@ impl Token {
     pub fn is_function(&self) -> bool {
         use Token::*;
         match self {
-            Max | Min | Sin | Cos | Tan | Sqrt => true,
+            Max | Min | Sin | Cos | Tan | Sqrt | Pi | Inf => true,
             _ => false,
         }
     }
@@ -99,6 +104,12 @@ impl Token {
         use Token::*;
         match (self.is_function(), self.is_operator()) {
             (true, false) => match self {
+                Inf => {
+                    stack.push(f64::INFINITY)
+                }
+                Pi => {
+                    stack.push(consts::PI)
+                }
                 Min => {
                     let (b, a) = (stack.pop()?, stack.pop()?);
                     stack.push(a.min(b))
