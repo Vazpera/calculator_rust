@@ -8,7 +8,7 @@ fn main() {
     if args.len() == 1 {
         println!("Please enter a formula!");
     } else {
-        let p = Parser::new()
+        let _ = Parser::new()
             .input(args[1].to_owned())
             .tokenize()
             .shunt()
